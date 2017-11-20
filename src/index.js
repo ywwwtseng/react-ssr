@@ -5,10 +5,22 @@ import Home from './client/routes/Home';
 
 const app = express();
 
+app.use(express.static('public'));
 app.get('/', (req, res) => {
   const content = renderToString(<Home />);
 
-  res.send(content);
+  const html = `
+    <html>
+      <head>
+        <body>
+          <div id="root">${content}</div>
+          <script src="bundle.js"></script>
+        </body>
+      </head>
+    </html>
+  `;
+
+  res.send(html);
 });
 
 app.listen(3000, () => {
