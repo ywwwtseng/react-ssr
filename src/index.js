@@ -4,8 +4,8 @@ import renderer from './renderer';
 const app = express();
 
 app.use(express.static('public'));
-app.get('/', (req, res) => {
-  res.send(renderer());
+app.get('*', (req, res) => {
+  res.send(renderer(req));
 });
 
 app.listen(3000, () => {

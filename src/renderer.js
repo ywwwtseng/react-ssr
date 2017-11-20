@@ -1,15 +1,20 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import Home from './client/routes/Home';
+import { StaticRouter } from 'react-router-dom';
+import Routes from './client/routes';
 
-export default () => {
-  const content = renderToString(<Home />);
+export default req => {
+  const content = renderToString(
+    <StaticRouter location={req.path} content={{}}>
+      <Routes />
+    </StaticRouter>
+  );
 
   return `
     <html>
       <head></head>
       <body>
-        <div id="root">$\{content}</div>
+        <div id="root">${content}</div>
         <script src="bundle.js"></script>
       </body>
     </html>
