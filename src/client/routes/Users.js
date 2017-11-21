@@ -24,8 +24,8 @@ class UserList extends React.Component {
 }
 
 
-function loadData() {
-  console.log('Im trying to load some data');
+function loadData(store) {
+  return store.dispatch(getUsers());
 }
 
 export { loadData };
