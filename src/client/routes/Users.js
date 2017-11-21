@@ -1,0 +1,33 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import { getUsers } from '../actions/index';
+
+class UserList extends React.Component {
+  componentDidMount() {
+    this.props.getUsers();
+  }
+
+  renderUsers() {
+    return this.props.users.map(user => (
+      <li key={user.id}>{user.name}</li>
+    ));
+  }
+
+  render() {
+    return (
+      <div>
+        Here's a big list of users:
+        <ul>{this.renderUsers()}</ul>
+      </div>
+    );
+  }
+}
+
+
+function loadData() {
+  console.log('Im trying to load some data');
+}
+
+export { loadData };
+
+export default connect(state => ({ users: state.users }), { getUsers })(UserList);

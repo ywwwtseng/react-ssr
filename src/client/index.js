@@ -1,11 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import Routes from './routes';
+import { BrowserRouter, Switch } from 'react-router-dom';
+import createStore from './createStore';
+import { Provider } from 'react-redux';
+import { renderRoutes } from 'react-router-config';
+import routes from './routes';
+
+const store = createStore();
 
 ReactDOM.hydrate(
-  <BrowserRouter>
-    <Routes />
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <Switch>
+        {renderRoutes(routes)}
+      </Switch>
+    </BrowserRouter>
+  </Provider>,
   document.getElementById('root')
 );
