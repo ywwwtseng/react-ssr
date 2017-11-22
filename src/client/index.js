@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { renderRoutes } from 'react-router-config';
 import routes from './routes';
 
-const store = createStore();
+const store = createStore(window.INITIAL_STATE);
 
 ReactDOM.hydrate(
   <Provider store={store}>

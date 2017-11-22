@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getUsers } from '../actions/index';
+import { getUsers } from '../actions';
 
 class UserList extends React.Component {
   componentDidMount() {
@@ -22,7 +22,6 @@ class UserList extends React.Component {
     );
   }
 }
-
 
 function loadData(store) {
   return store.dispatch(getUsers());
