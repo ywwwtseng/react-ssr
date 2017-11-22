@@ -28,6 +28,7 @@ function loadData(store) {
   return store.dispatch(getUsers());
 }
 
-export { loadData };
-
-export default connect(state => ({ users: state.users }), { getUsers })(UserList);
+export default {
+  loadData,
+  component: connect(state => ({ users: state.users }), { getUsers })(UserList)
+};
