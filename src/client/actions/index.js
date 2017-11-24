@@ -7,3 +7,13 @@ export const getUsers = () => async (dispatch, getState, api) => {
     payload: res
   });
 };
+
+export const GET_CURRENT_USER = 'GET_CURRENT_USER';
+export const getCurrentUser = () => async (dispatch, getState, api) => {
+  const res = await api.get('/current_user');
+
+  dispatch({
+    type: GET_CURRENT_USER,
+    payload: res
+  });
+};
