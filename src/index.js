@@ -4,7 +4,7 @@ import proxy from 'express-http-proxy';
 import routes from './client/routes';
 import renderer from './renderer';
 import createStore from './client/createStore';
-
+import axios from 'axios';
 
 const app = express();
 
@@ -21,7 +21,12 @@ app.use(
 );
 app.use(express.static('public'));
 app.get('*', (req, res) => {
-  const store = createStore();
+  const axiosInstance = axios.create({
+    baseURL: 'http://react-ssr-api.herokuapp.com',
+    headers: { cookie: req.get('cookie') || '' }
+  });
+
+  const store = createStore(undefined, axiosInstance);
 
   const promises = matchRoutes(routes, req.path).map(({ route }) => {
     return route.loadData ? route.loadData(store) : null;

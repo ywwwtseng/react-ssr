@@ -2,6 +2,10 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
 
-export default (preloadedState = {}) => {
-  return createStore(reducers, preloadedState, applyMiddleware(thunk));
+export default (preloadedState = {}, axiosInstance) => {
+  return createStore(
+    reducers,
+    preloadedState,
+    applyMiddleware(thunk.withExtraArgument(axiosInstance))
+  );
 };
