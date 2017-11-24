@@ -1,6 +1,7 @@
 import App from '../component/App';
 import Home from './Home';
-import UserList from './UserList';
+import UsersList from './UsersList';
+import AdminsList from './AdminsList';
 import NotFound from './NotFound';
 
 export default [
@@ -13,8 +14,12 @@ export default [
         exact: true
       },
       {
-        ...UserList,
+        ...UsersList,
         path: '/users',
+      },
+      {
+        ...AdminsList,
+        path: '/admins'
       },
       {
         ...NotFound

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getUsers } from '../actions';
 
-class UserList extends React.Component {
+class UsersList extends React.Component {
   componentDidMount() {
     this.props.getUsers();
   }
@@ -29,5 +29,5 @@ function loadData(store) {
 
 export default {
   loadData,
-  component: connect(state => ({ users: state.users }), { getUsers })(UserList)
+  component: connect(state => ({ users: state.users }), { getUsers })(UsersList)
 };
