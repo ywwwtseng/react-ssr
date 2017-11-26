@@ -6,20 +6,25 @@ import { renderRoutes } from 'react-router-config';
 import serialize from 'serialize-javascript';
 import { Helmet } from 'react-helmet';
 import routes from './client/routes';
+import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 
+const sheet = new ServerStyleSheet();
 
 export default (req, store, context) => {
   const content = renderToString(
-    <Provider store={store}>
-      <StaticRouter location={req.path} context={context}>
-        <Switch>
-          {renderRoutes(routes)}
-        </Switch>
-      </StaticRouter>
-    </Provider>
+    <StyleSheetManager sheet={sheet.instance}>
+      <Provider store={store}>
+        <StaticRouter location={req.path} context={context}>
+          <Switch>
+            {renderRoutes(routes)}
+          </Switch>
+        </StaticRouter>
+      </Provider>
+    </StyleSheetManager>
   );
 
   const helmet = Helmet.renderStatic();
+  const styleTags = sheet.getStyleTags();
 
   return `
     <html>
@@ -27,6 +32,7 @@ export default (req, store, context) => {
         ${helmet.title.toString()}
         ${helmet.meta.toString()}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+        ${styleTags}
       </head>
       <body>
         <div id="root">${content}</div>

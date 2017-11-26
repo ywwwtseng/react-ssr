@@ -19,7 +19,7 @@ app.use(
     }
   )
 );
-app.use(express.static('public'));
+app.use(express.static('client'));
 app.get('*', (req, res) => {
   const axiosInstance = axios.create({
     baseURL: 'http://react-ssr-api.herokuapp.com',
