@@ -5,7 +5,14 @@ import routes from './client/routes';
 import renderer from './renderer';
 import createStore from './client/createStore';
 import axios from 'axios';
+import SocketServer from './socket-server';
+import config from './config';
 
+// Socket Server
+const socketServer = new SocketServer();
+socketServer.listen(config.SOCKET_SEVER_PORT);
+
+// Web Server
 const app = express();
 
 app.use(

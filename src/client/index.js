@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { renderRoutes } from 'react-router-config';
 import axios from 'axios';
 import routes from './routes';
+import './socket-client';
 
 const axiosInstance = axios.create({
   baseURL: '/api'
