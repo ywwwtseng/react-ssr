@@ -4,9 +4,7 @@ class SocketEvents {
   }
 
   attach() {
-    this.io.on('connection', (socket) => {
-      console.log('connection');
-    });
+    this.io.on('connection', (socket) => {});
   }
 }
 

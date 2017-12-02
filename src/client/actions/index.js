@@ -17,13 +17,3 @@ export const getCurrentUser = () => async (dispatch, getState, api) => {
     payload: res
   });
 };
-
-export const GET_ADMINS = 'GET_ADMINS';
-export const getAdmins = () => async (dispatch, getState, api) => {
-  const res = await api.get('/admins');
-
-  dispatch({
-    type: GET_ADMINS,
-    payload: res
-  });
-};

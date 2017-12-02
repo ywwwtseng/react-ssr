@@ -4,6 +4,7 @@ import io from 'socket.io';
 import mongoose from 'mongoose';
 import config from '../config';
 import SocketEvents from './socket-events';
+import routes from './routes';
 
 class ApiSocketServer {
   constructor() {
@@ -21,11 +22,15 @@ class ApiSocketServer {
       .on('error', error => console.log('Error connecting to MongoLab:', error));
   }
 
+  useMiddlewares() {}
+
   listen(port = 3001) {
     this.connectMongoDB();
+    this.useMiddlewares();
+    routes(this.app);
     new SocketEvents(this.io).attach();
     this.http.listen(port);
   }
 }
 
-export default ApiSocketServer;
+export default new ApiSocketServer();

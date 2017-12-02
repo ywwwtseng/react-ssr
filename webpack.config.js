@@ -1,5 +1,6 @@
 const path = require('path');
 const WebpackNodeExternals = require('webpack-node-externals');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 //
 // Configuration for the client-side bundle (client)
@@ -32,11 +33,21 @@ const clientConfig = {
             'stage-0',
             ['env', { targets: { browsers: ['last 2 versions'] } }]
           ],
-          compact: true
+          compact: true,
+          plugins: ['babel-plugin-styled-components']
         }
-      }
+      },
     ]
-  }
+  },
+
+  plugins: [
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, 'src/client/assets'),
+        to: path.resolve(__dirname, 'client/assets')
+      }
+    ])
+  ]
 };
 
 //
@@ -71,7 +82,9 @@ const serverConfig = {
             'stage-0',
             ['env', { targets: { node: 'current' } }]
           ],
-          compact: true
+          compact: true,
+          plugins: ['babel-plugin-styled-components']
+
         }
       }
     ]
