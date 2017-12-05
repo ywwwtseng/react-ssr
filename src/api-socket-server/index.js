@@ -26,7 +26,7 @@ class ApiSocketServer {
       .on('error', error => console.log('Error connecting to MongoLab:', error));
   }
 
-  useMiddlewares() {
+  registerMiddlewares() {
     this.app.use(morgan('dev'));
     this.app.use(bodyParser.json());
     this.app.use(mongodbStoreSession(config.MONGO_URI));
@@ -37,7 +37,7 @@ class ApiSocketServer {
 
   listen(port = 3001) {
     this.connectMongoDB();
-    this.useMiddlewares();
+    this.registerMiddlewares();
     routes(this.app);
     new SocketEvents(this.io).attach();
     this.http.listen(port);
