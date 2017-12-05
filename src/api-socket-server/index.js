@@ -2,6 +2,10 @@ import express from 'express';
 import http from 'http';
 import io from 'socket.io';
 import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+import session from 'express-session';
+import connectMongo from 'connect-mongo';
+import passport from './services/passport';
 import config from '../config';
 import SocketEvents from './socket-events';
 import routes from './routes';
@@ -9,6 +13,7 @@ import routes from './routes';
 class ApiSocketServer {
   constructor() {
     this.app = express();
+    this.MongoStore = connectMongo(session);
     this.http = http.Server(this.app);
     this.io = io(this.http);
   }
@@ -22,7 +27,20 @@ class ApiSocketServer {
       .on('error', error => console.log('Error connecting to MongoLab:', error));
   }
 
-  useMiddlewares() {}
+  useMiddlewares() {
+    this.app.use(bodyParser.json());
+    this.app.use(passport.initialize());
+    this.app.use(passport.session());
+    this.app.use(session({
+      resave: false,
+      saveUninitialized: false,
+      secret: 'secret',
+      store: new this.MongoStore({
+        url: config.MONGO_URI,
+        autoReconnect: true
+      })
+    }));
+  }
 
   listen(port = 3001) {
     this.connectMongoDB();
