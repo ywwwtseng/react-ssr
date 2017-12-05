@@ -25,6 +25,10 @@ export default {
   // },
 
   login(req, res, next) {
-    res.send( 'User ID' + req.user.id );
+    res.send('User ID ' + req.user.id);
+  },
+
+  auth(req, res, next) {
+    res.send('Authenticated ' + req.user.id);
   }
 };
