@@ -25,7 +25,9 @@ export default {
   // },
 
   login(req, res, next) {
-    res.send('User ID ' + req.user.id);
+    const { _id, username, online } = req.user;
+
+    res.send({ _id, username, online });
   },
 
   auth(req, res, next) {

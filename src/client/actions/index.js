@@ -1,19 +1,30 @@
-export const GET_USERS = 'GET_USERS';
-export const getUsers = () => async (dispatch, getState, api) => {
-  const res = await api.get('/users');
+import history from '../history';
+
+export const USER_LOGIN = 'USER_LOGIN';
+export const userLogin = ({ username, password }) => async (dispatch, getState, api) => {
+  const res = await api.post('/login', { username, password });
 
   dispatch({
-    type: GET_USERS,
+    type: USER_LOGIN,
     payload: res
   });
+
+  history.push('/');
 };
 
 export const GET_CURRENT_USER = 'GET_CURRENT_USER';
 export const getCurrentUser = () => async (dispatch, getState, api) => {
-  const res = await api.get('/current_user');
+  try {
+    const res = await api.get('/current_user');
 
-  dispatch({
-    type: GET_CURRENT_USER,
-    payload: res
-  });
+    dispatch({
+      type: GET_CURRENT_USER,
+      payload: res
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_CURRENT_USER,
+      payload: false
+    });
+  }
 };

@@ -1,8 +1,11 @@
 import Login from './Login';
 import { compose } from 'recompose';
+import { connect } from 'react-redux';
 import withHandlers from 'recompose/withHandlers';
+import { userLogin } from '../../actions';
 
 const enhance = compose(
+  connect(null, { userLogin }),
   withHandlers(() => {
     // https://github.com/acdlite/recompose/issues/472
     let emailField = null;
@@ -13,9 +16,9 @@ const enhance = compose(
 
       registerPasswordField: props => ref => passwordField = ref,
 
-      onSubmit: props => event => {
+      onSubmit: ({ userLogin }) => event => {
         event.preventDefault();
-        console.log(emailField.value, passwordField.value);
+        userLogin({ username: emailField.value, password: passwordField.value });
       }
     }
   })

@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import createStore from './createStore';
 import { Provider } from 'react-redux';
 import { renderRoutes } from 'react-router-config';
 import axios from 'axios';
 import routes from './routes';
+import history from './history';
 import './socket-client';
 
 const axiosInstance = axios.create({
@@ -16,9 +17,9 @@ const store = createStore(window.INITIAL_STATE, axiosInstance);
 
 ReactDOM.hydrate(
   <Provider store={store}>
-    <BrowserRouter>
+    <Router history={history}>
       {renderRoutes(routes)}
-    </BrowserRouter>
+    </Router>
   </Provider>,
   document.getElementById('root')
 );
