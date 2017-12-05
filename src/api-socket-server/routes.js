@@ -8,6 +8,8 @@ const routes = app => {
   app.post('/login', passport.authenticate('local'), AuthController.login);
   app.get('/auth', isAuthenticated, AuthController.auth);
   app.get('/current_user', isAuthenticated, Usercontroller.current_user);
+  app.get('/users', isAuthenticated, Usercontroller.users);
+
 };
 
 export default routes;

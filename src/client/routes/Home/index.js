@@ -1,11 +1,26 @@
-import Home from './Home';
 import { compose } from 'recompose';
-import requireAuth from '../../component/hocs/requireAuth';
+import lifecycle from 'recompose/lifecycle';
+import { connect } from 'react-redux';
+import Home from './Home';
+import requireAuth from '../../components/hocs/requireAuth';
+import { getUsers } from '../../actions';
 
 const enhance = compose(
-  requireAuth
+  requireAuth,
+
+  connect(
+    ({ users }) => ({ users }),
+    { getUsers }
+  ),
+
+  lifecycle({
+    componentDidMount() {
+      this.props.getUsers();
+    }
+  }),
 );
 
 export default {
-  component: enhance(Home)
+  component: enhance(Home),
+  loadData: ({ dispatch }) => dispatch(getUsers())
 };

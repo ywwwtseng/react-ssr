@@ -7,7 +7,6 @@ import { renderRoutes } from 'react-router-config';
 import axios from 'axios';
 import routes from './routes';
 import history from './history';
-import './socket-client';
 
 const axiosInstance = axios.create({
   baseURL: '/api'

@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const WebpackNodeExternals = require('webpack-node-externals');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -41,6 +42,10 @@ const clientConfig = {
   },
 
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.BROWSER': true
+    }),
+
     new CopyWebpackPlugin([
       {
         from: path.resolve(__dirname, 'src/client/assets'),
@@ -89,6 +94,12 @@ const serverConfig = {
       }
     ]
   },
+
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.BROWSER': false
+    })
+  ],
 
   externals: [WebpackNodeExternals()]
 };

@@ -1,8 +1,10 @@
 import React from 'react';
 import StyledHome from './style';
 
-export default () => (
+export default ({
+  users
+}) => (
   <StyledHome className="center-align">
-    Welcome
+    {JSON.stringify(users)}
   </StyledHome>
 );

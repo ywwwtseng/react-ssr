@@ -1,4 +1,4 @@
-import App from '../component/App';
+import App from '../components/App';
 import Login from './Login';
 import Home from './Home';
 import NotFound from './NotFound';
