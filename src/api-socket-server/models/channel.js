@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 const ChannelSchema = Schema({
   owners: [{
@@ -17,6 +17,6 @@ const ChannelSchema = Schema({
   }]
 });
 
-const Channel = model('channel', ChannelSchema);
+const Channel = mongoose.model('channel', ChannelSchema);
 
 export default Channel;

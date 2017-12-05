@@ -3,6 +3,7 @@ import http from 'http';
 import io from 'socket.io';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
+import morgan from 'morgan';
 import session from 'express-session';
 import connectMongo from 'connect-mongo';
 import passport from './services/passport';
@@ -28,6 +29,7 @@ class ApiSocketServer {
   }
 
   useMiddlewares() {
+    this.app.use(morgan('dev'));
     this.app.use(bodyParser.json());
     this.app.use(passport.initialize());
     this.app.use(passport.session());
@@ -40,6 +42,7 @@ class ApiSocketServer {
         autoReconnect: true
       })
     }));
+    this.app.use((err, req, res, next) => res.status(500).send({error: err.message}));
   }
 
   listen(port = 3001) {

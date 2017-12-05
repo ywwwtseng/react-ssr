@@ -1,7 +1,6 @@
 import passport from 'passport';
 import User from '../models/user';
-import { Strategy as LocalStrategy } from 'passport-local';
-
+import Local from 'passport-local';
 
 // SerializeUser is used to provide some identifying token that can be saved
 // in the users session.  We traditionally use the 'ID' for this.
@@ -17,19 +16,25 @@ passport.deserializeUser((id, done) => {
   });
 });
 
-passport.use(new LocalStrategy(
+passport.use(new Local.Strategy(
   function (username, password, done) {
+    const comparePassword = user => user.comparePassword(password, (err, isMatch) => {
+      if (err) { return done(err); }
+      if (isMatch) { return done(null, user); }
+
+      return done(null, false, 'Invalid credentials.');
+    });
+
     User.findOne({ username }, (err, user) => {
       if (err) { return done(err); }
-      if (!user) { return done(null, false, 'Invalid Credentials'); }
+      // if (!user) { return done(null, false, 'Invalid Credentials'); }
+      if (!user) {
+        const user = new User({ username, password });
+        return user.save().then(user => comparePassword(user));
+      }
 
-      user.comparePassword(password, (err, isMatch) => {
-        if (err) { return done(err); }
-        if (isMatch) { return done(null, user); }
-
-        return done(null, false, 'Invalid credentials.');
-      });
-    })
+      return comparePassword(user);
+    });
   }
 ));
 

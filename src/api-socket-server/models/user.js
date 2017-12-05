@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import bcrypt from 'bcrypt-nodejs';
 
 const UserSchema = new Schema({
@@ -22,7 +22,7 @@ const UserSchema = new Schema({
 
 UserSchema.pre('save', function (next) {
   const user = this;
-  if (user.isModified('password')) { return next(); }
+  if (!user.isModified('password')) { return next(); }
 
   // generate a salt
   bcrypt.genSalt(10, function (err, salt) {
@@ -44,4 +44,6 @@ UserSchema.methods.comparePassword = function (candidatePassword, cb) {
   });
 };
 
-export default model('user', UserSchema);
+const User = mongoose.model('user', UserSchema);
+
+export default User;

@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 const MessageSchema = new Schema({
   author: {
@@ -17,6 +17,6 @@ const MessageSchema = new Schema({
   }
 });
 
-const Message = model('message', MessageSchema);
+const Message = mongoose.model('message', MessageSchema);
 
 export default Message;
