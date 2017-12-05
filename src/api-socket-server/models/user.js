@@ -9,7 +9,7 @@ const UserSchema = new Schema({
     required: true
   },
 
-  logged: {
+  online: {
     type: Boolean,
     default: false
   },
