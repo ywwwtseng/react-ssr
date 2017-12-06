@@ -31,11 +31,10 @@ export const getCurrentUser = () => async (dispatch, getState, api) => {
 };
 
 export const GET_USERS = 'GET_USERS';
-export const getUsers = (socket = ()=>{}) => async (dispatch, getState, api) => {
-
+export const getUsers = socket => async (dispatch, getState, api) => {
   try {
 
-    if (process.env.BROWSER) {
+    if (process.env.BROWSER && socket) {
 
       socket.emit('user-list');
       socket.on('user-list-response', (data) => {
@@ -57,6 +56,40 @@ export const getUsers = (socket = ()=>{}) => async (dispatch, getState, api) => 
 
     }
   } catch (error) {
+
     throw error;
+
+  }
+};
+
+export const GET_MESSAGES = 'GET_MESSAGES';
+export const getMessages = socket => async (dispatch, getState, api) => {
+  try {
+
+    if (process.env.BROWSER && socket) {
+
+      socket.emit('messages');
+      socket.on('messages-response', (data) => {
+
+        dispatch({
+          type: GET_MESSAGES,
+          payload: data
+        });
+      });
+
+    } else {
+
+      const res = await api.get('/messages');
+
+      dispatch({
+        type: GET_MESSAGES,
+        payload: res
+      });
+
+    }
+  } catch (error) {
+
+    throw error;
+
   }
 };

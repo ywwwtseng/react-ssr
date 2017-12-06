@@ -1,4 +1,5 @@
 import User from './models/user';
+import Message from './models/message';
 
 class SocketEvents {
   constructor(io) {
@@ -47,6 +48,26 @@ class SocketEvents {
         });
 
       });
+
+      // Get messages
+      socket.on('messages', () => {
+        Message.find()
+          .select('-_id')
+          .select('-__v')
+          .then(messages => this.io.emit('messages-response', { error: false, data: messages }));
+      });
+
+      // Send message
+      socket.on('send-message', ({ content }) => {
+        const message = new Message({ author: socket.userId, content });
+        message.save(err => {
+          Message.find()
+            .select('-_id')
+            .select('-__v')
+            .then(messages => this.io.emit('messages-response', { error: false, data: messages }));
+        });
+      });
+
     });
   }
 
