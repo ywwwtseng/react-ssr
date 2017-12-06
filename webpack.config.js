@@ -35,7 +35,7 @@ const clientConfig = {
             ['env', { targets: { browsers: ['last 2 versions'] } }]
           ],
           compact: true,
-          plugins: ['babel-plugin-styled-components']
+          plugins: ['transform-class-properties', 'babel-plugin-styled-components']
         }
       },
     ]
@@ -88,7 +88,7 @@ const serverConfig = {
             ['env', { targets: { node: 'current' } }]
           ],
           compact: true,
-          plugins: ['babel-plugin-styled-components']
+          plugins: ['transform-class-properties', 'babel-plugin-styled-components']
 
         }
       }

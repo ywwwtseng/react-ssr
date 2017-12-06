@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import history from '../history';
-import socket from '../socket-client';
 
 export const USER_LOGIN = 'USER_LOGIN';
 export const userLogin = ({ username, password }) => async (dispatch, getState, api) => {
@@ -32,14 +31,13 @@ export const getCurrentUser = () => async (dispatch, getState, api) => {
 };
 
 export const GET_USERS = 'GET_USERS';
-export const getUsers = () => async (dispatch, getState, api) => {
-  const userId = _.get(getState(), ['auth', '_id'], null);
+export const getUsers = (socket = ()=>{}) => async (dispatch, getState, api) => {
 
   try {
 
     if (process.env.BROWSER) {
 
-      socket.emit('user-list', { userId });
+      socket.emit('user-list');
       socket.on('user-list-response', (data) => {
 
         dispatch({

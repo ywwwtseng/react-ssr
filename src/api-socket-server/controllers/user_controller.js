@@ -2,13 +2,9 @@ import User from '../models/user';
 
 export default {
   current_user(req, res, next) {
-    const { _id } = req.user;
+    const { _id, username, online } = req.user;
 
-    User.findByIdAndUpdate(_id, { $set: { online: true } }, (err, user) => {
-      const { _id, username, online } = user;
-
-      res.send({ _id, username, online });
-    });
+    res.send({ _id, username, online });
   },
 
   users(req, res, next) {

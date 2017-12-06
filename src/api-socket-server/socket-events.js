@@ -6,8 +6,10 @@ class SocketEvents {
   }
 
   registerMiddlewares() {
-    this.io.use(function (socket, next) {
-      next();
+    this.io.use((socket, next) => {
+      socket.userId = socket.request._query['userId'];
+
+      User.findByIdAndUpdate(socket.userId, { $set: { online: true } }, next);
     });
   }
 
@@ -15,29 +17,34 @@ class SocketEvents {
     this.io.on('connection', (socket) => {
 
       // Get the user's list
-      socket.on('user-list', ({ userId }) => {
+      socket.on('user-list', () => {
 
-        let userListResponse = {};
+        if (!socket.userId) {
 
-        if (!userId) {
-
-          userListResponse.error = true;
-          userListResponse.message = 'User does not exits.';
-          this.io.emit('user-list-response', userListResponse);
+          this.io.emit('user-list-response', { error: true, message: 'User does not exits.' });
 
         } else {
 
-          User
-            .find()
+          User.find()
             .select('-password')
             .select('-__v')
-            .then(users => {
-              userListResponse.error = false;
-              userListResponse.data = users;
-              this.io.emit('user-list-response', userListResponse);
-            });
+            .then(users => this.io.emit('user-list-response', { error: false, data: users }));
 
         }
+
+      });
+
+      // Logout the user
+      socket.on('logout', () => socket.disconnect());
+
+      // Socket disconnect
+      socket.on('disconnect', () => {
+        User.findByIdAndUpdate(socket.userId, { $set: { online: false } }, (err, user) => {
+          User.find()
+            .select('-password')
+            .select('-__v')
+            .then(users => this.io.emit('user-list-response', { error: false, data: users }));
+        });
 
       });
     });
