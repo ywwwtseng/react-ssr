@@ -1,16 +1,20 @@
-import _ from 'lodash';
 import history from '../history';
 
 export const USER_LOGIN = 'USER_LOGIN';
 export const userLogin = ({ username, password }) => async (dispatch, getState, api) => {
-  const res = await api.post('/login', { username, password });
 
-  dispatch({
-    type: USER_LOGIN,
-    payload: res
-  });
+  try {
+    const res = await api.post('/login', { username, password });
 
-  history.push('/');
+    dispatch({
+      type: USER_LOGIN,
+      payload: res
+    });
+
+    history.push('/');
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const GET_CURRENT_USER = 'GET_CURRENT_USER';

@@ -1,10 +1,11 @@
 import React from 'react';
+import cx from 'classnames';
 import StyledLogin from './style';
 
 export default ({
   onSubmit,
-  registerEmailField,
-  registerPasswordField
+  registerEmailField, emailFieldError, setEmailFieldError,
+  registerPasswordField, passwordFieldError, setPasswordFieldError
 }) => (
   <StyledLogin>
     <form onSubmit={onSubmit}>
@@ -15,9 +16,20 @@ export default ({
       <div className="bottomBar">
         <div className="fieldsContainer">
           <label htmlFor="InputUsername">USERNAME</label>
-          <input ref={registerEmailField} id="InputUsername" />
+          <input
+            className={cx({ error: emailFieldError })}
+            ref={registerEmailField}
+            id="InputUsername"
+            onChange={() => setEmailFieldError(false)}
+          />
           <label htmlFor="InputPassword">PASSWORD</label>
-          <input ref={registerPasswordField} id="InputPassword" type="password" />
+          <input
+            className={cx({ error: passwordFieldError })}
+            ref={registerPasswordField}
+            id="InputPassword"
+            onChange={() => setPasswordFieldError(false)}
+            type="password"
+          />
         </div>
         <button>LOG IN</button>
       </div>

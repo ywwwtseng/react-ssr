@@ -54,6 +54,10 @@ export default styled.div`
         border-right: none;
         padding: 4px 0;
         font-size: 15px;
+        
+        &.error {
+          border-bottom: 1px solid #e74c3c;
+        }
       }
        
       button {
