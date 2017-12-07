@@ -8,12 +8,19 @@ export default ({
 }) => (
   <StyledLogin>
     <form onSubmit={onSubmit}>
-      <h3>Log in</h3>
-      <label htmlFor="InputUsername">USERNAME</label>
-      <input ref={registerEmailField} id="InputUsername" />
-      <label htmlFor="InputPassword">PASSWORD</label>
-      <input ref={registerPasswordField} id="InputPassword" />
-      <button>LOG IN</button>
+      <div className="topBar">
+        <h1>Log in</h1>
+        <p>Server side rending real-time demo</p>
+      </div>
+      <div className="bottomBar">
+        <div className="fieldsContainer">
+          <label htmlFor="InputUsername">USERNAME</label>
+          <input ref={registerEmailField} id="InputUsername" />
+          <label htmlFor="InputPassword">PASSWORD</label>
+          <input ref={registerPasswordField} id="InputPassword" type="password" />
+        </div>
+        <button>LOG IN</button>
+      </div>
     </form>
   </StyledLogin>
 );

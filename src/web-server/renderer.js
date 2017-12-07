@@ -29,7 +29,20 @@ export default (req, store, context) => {
       <head>
         ${helmet.title.toString()}
         ${helmet.meta.toString()}
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+        <style>
+          * {
+            margin: 0;
+            padding: 0;
+          }
+          
+          :focus {
+            outline: 0 none !important;
+          }
+          
+          body {
+            font-family: "Roboto", Helvetica, Arial, sans-serif;
+          }
+        </style>
         ${styleTags}
       </head>
       <body>
