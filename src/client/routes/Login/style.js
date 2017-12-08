@@ -11,7 +11,6 @@ export default styled.div`
   justify-content: center;
   align-items: center;
   padding: 0 12px;
-  box-sizing: border-box;
   
   form {
     width: 100%;

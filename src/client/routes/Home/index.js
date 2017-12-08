@@ -12,7 +12,7 @@ const enhance = compose(
   requireAuth,
 
   connect(
-    ({ users, messages }) => ({ users, messages }),
+    ({ auth, users, messages }) => ({ auth, users, messages }),
     { getUsers, getMessages }
   ),
 

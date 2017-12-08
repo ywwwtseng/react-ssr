@@ -33,6 +33,11 @@ export default (req, store, context) => {
           * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+          }
+          
+          ol, ul {
+	          list-style: none;
           }
           
           :focus {
