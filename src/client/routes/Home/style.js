@@ -71,7 +71,9 @@ export default styled.div`
     .topBar {
       display: flex;
       align-items: center;
-      padding: 6px;
+      padding: 0 12px;
+      height: 34px;
+      min-height: 34px;
       background: rgba(255,255,255,0.9);
      
       button {
@@ -82,6 +84,7 @@ export default styled.div`
         padding: 1px 2px;
         font-size: 15px;
         cursor: pointer;
+        border-radius: 3px;
         transition: color 300ms, border 300ms;
         
         &:hover {
@@ -94,6 +97,7 @@ export default styled.div`
     ul {
       padding: 1rem;
       flex: 1;
+      overflow: auto;
       
       li.message {
         display: flex;
@@ -122,6 +126,7 @@ export default styled.div`
     
     .input-group {
       padding: 12px;
+      min-height: 62px;
       
       input {
         background: transparent;
