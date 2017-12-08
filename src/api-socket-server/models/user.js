@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
+import faker from 'faker';
 import bcrypt from 'bcrypt-nodejs';
 
 const UserSchema = new Schema({
@@ -7,6 +8,11 @@ const UserSchema = new Schema({
     trim: true,
     unique: true,
     required: true
+  },
+
+  photo: {
+    type: String,
+    default: faker.image.avatar()
   },
 
   online: {

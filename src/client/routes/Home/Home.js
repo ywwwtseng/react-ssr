@@ -4,7 +4,9 @@ import Channel from './components/Channel';
 import StyledHome from './style';
 
 export default ({
-  auth, users, messages, sendMessage
+  auth, users,
+  messages, sendMessage,
+  message, setMessage
 }) => (
   <StyledHome className="center-align">
     <UserList
@@ -15,6 +17,8 @@ export default ({
     <Channel
       messages={messages}
       sendMessage={sendMessage}
+      message={message}
+      setMessage={setMessage}
     />
   </StyledHome>
 );

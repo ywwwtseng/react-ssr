@@ -29,6 +29,7 @@
     "express": "4.15.4",
     "express-http-proxy": "1.0.6",
     "express-session": "^1.15.6",
+    "faker": "^4.1.0",
     "history": "^4.7.2",
     "lodash": "4.17.4",
     "mongoose": "^4.13.6",

@@ -22,8 +22,19 @@ const enhance = compose(
     null
   ),
 
+  withState(
+    'message',
+    'setMessage',
+    ''
+  ),
+
   withHandlers({
-    sendMessage: ({ socket }) => content => socket.emit('send-message', { content })
+    sendMessage: ({ message, setMessage, socket }) => event => {
+      if (event.keyCode === 13) {
+        setMessage('');
+        socket.emit('send-message', { content: message });
+      }
+    }
   }),
 
   lifecycle({

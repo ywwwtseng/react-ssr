@@ -52,8 +52,8 @@ class SocketEvents {
       // Get messages
       socket.on('messages', () => {
         Message.find()
-          .select('-_id')
           .select('-__v')
+          .populate({ path: 'author', select: ['username', 'photo'] })
           .then(messages => this.io.emit('messages-response', { error: false, data: messages }));
       });
 
@@ -62,8 +62,8 @@ class SocketEvents {
         const message = new Message({ author: socket.userId, content });
         message.save(err => {
           Message.find()
-            .select('-_id')
             .select('-__v')
+            .populate({ path: 'author', select: ['username', 'photo'] })
             .then(messages => this.io.emit('messages-response', { error: false, data: messages }));
         });
       });
