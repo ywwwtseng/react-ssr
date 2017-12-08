@@ -1,4 +1,5 @@
 import React from 'react';
+import history from '../../../history';
 
 export default ({
   messages, sendMessage,
@@ -7,7 +8,7 @@ export default ({
   <div className="channel">
     <div className="topBar">
       <span>Channel</span>
-      <button>Exit</button>
+      <button onClick={() => history.push('/login')}>Exit</button>
     </div>
     <ul>
       {messages.map(({ _id, author, content }) => (

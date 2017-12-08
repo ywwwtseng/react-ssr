@@ -30,6 +30,17 @@ export default {
     res.send({ _id, username, online });
   },
 
+  logout(req, res, next) {
+    req.session.destroy(err => {
+      if (err) {
+        return res.status(500).send({ error: 'Logout error' });
+      }
+
+      res.clearCookie('connect.sid');
+      res.sendStatus(200);
+    });
+  },
+
   auth(req, res, next) {
     res.send('Authenticated ' + req.user.id);
   }

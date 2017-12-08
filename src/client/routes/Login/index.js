@@ -1,9 +1,10 @@
 import Login from './Login';
 import { compose } from 'recompose';
 import withState from 'recompose/withState';
+import lifecycle from 'recompose/lifecycle';
 import { connect } from 'react-redux';
 import withHandlers from 'recompose/withHandlers';
-import { userLogin } from '../../actions';
+import { userLogin, userLogout } from '../../actions';
 
 const enhance = compose(
   withState(
@@ -18,7 +19,7 @@ const enhance = compose(
     false
   ),
 
-  connect(null, { userLogin }),
+  connect(null, { userLogin, userLogout }),
 
   withHandlers(() => {
     // https://github.com/acdlite/recompose/issues/472
@@ -50,7 +51,13 @@ const enhance = compose(
           });
       }
     }
-  })
+  }),
+
+  lifecycle({
+    componentDidMount() {
+      this.props.userLogout();
+    },
+  }),
 );
 
 export default {
