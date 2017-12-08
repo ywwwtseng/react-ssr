@@ -17,7 +17,7 @@ class ApiSocketServer {
     this.io = io(this.http);
   }
 
-  connectMongoDB() {
+  connectMongodb() {
     mongoose.Promise = global.Promise;
 
     mongoose.connect(config.MONGO_URI, { useMongoClient: true });
@@ -36,7 +36,7 @@ class ApiSocketServer {
   }
 
   listen(port = 3001) {
-    this.connectMongoDB();
+    this.connectMongodb();
     this.registerMiddlewares();
     routes(this.app);
     new SocketEvents(this.io).attach();
