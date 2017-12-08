@@ -8,7 +8,7 @@ export default ({
   messages, sendMessage,
   message, setMessage
 }) => (
-  <StyledHome className="center-align">
+  <StyledHome>
     <UserList
       auth={auth}
       users={users}

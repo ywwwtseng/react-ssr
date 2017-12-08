@@ -1,9 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { getCurrentUser } from '../../actions';
 
 export default ChildComponent => {
   class RequireAuth extends React.Component {
+    constructor(props) {
+      super(props);
+
+      props.getCurrentUser();
+    }
+
     render() {
       switch (this.props.auth) {
         case false:
@@ -20,5 +27,5 @@ export default ChildComponent => {
     return { auth };
   }
 
-  return connect(mapStateToProps)(RequireAuth);
+  return connect(mapStateToProps, { getCurrentUser })(RequireAuth);
 };

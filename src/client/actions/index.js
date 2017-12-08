@@ -19,6 +19,15 @@ export const userLogin = ({ username, password }) => async (dispatch, getState, 
 
 export const USER_LOGOUT = 'USER_LOGOUT';
 export const userLogout = () => async (dispatch, getState, api) => {
+  const { auth } = getState();
+
+  if (!auth) return;
+
+  dispatch({
+    type: GET_CURRENT_USER,
+    payload: false
+  });
+
   try {
     await api.post('/logout');
 
