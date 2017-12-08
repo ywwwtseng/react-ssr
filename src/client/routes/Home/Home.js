@@ -12,7 +12,6 @@ export default ({
     <UserList
       auth={auth}
       users={users}
-      logout={()=>{}}
     />
     <Channel
       messages={messages}
