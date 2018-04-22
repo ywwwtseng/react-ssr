@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 import config from '../../config';
 
-const createSocketClient = options => io(`${location.hostname}:${config.SOCKET_SEVER_PORT}`, options);
+const createSocketClient = options => io(config.API_URI, { secure: true, reconnect: true, rejectUnauthorized : false, ...options });
 
 export default process.env.BROWSER && createSocketClient;

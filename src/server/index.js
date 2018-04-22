@@ -9,11 +9,13 @@ import passport from './services/passport';
 import config from '../config';
 import SocketEvents from './socket-events';
 import routes from './routes';
+import SendHtml from './send-html';
 
-class ApiSocketServer {
+class Server {
   constructor() {
     this.app = express();
     this.http = http.Server(this.app);
+    this.sendHtml = SendHtml(this.app);
     this.io = io(this.http);
   }
 
@@ -40,8 +42,9 @@ class ApiSocketServer {
     this.registerMiddlewares();
     routes(this.app);
     new SocketEvents(this.io).attach();
+    this.sendHtml.connect();
     this.http.listen(port);
   }
 }
 
-export default new ApiSocketServer();
+export default new Server();
