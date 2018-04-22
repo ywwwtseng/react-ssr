@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackShellPlugin = require('webpack-shell-plugin');
 
+const __DEV__ = process.env.NODE_ENV === 'development';
+
 //
 // Configuration for the client-side bundle (client)
 // -----------------------------------------------------------------------------
@@ -43,7 +45,11 @@ const clientConfig = {
 
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.BROWSER': true
+      'process.env.BROWSER': true,
+      'process.env': {
+          NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+      },
+      __DEV__
     }),
 
     new CopyWebpackPlugin([
@@ -53,7 +59,9 @@ const clientConfig = {
       }
     ]),
 
-    new WebpackShellPlugin({ onBuildEnd: [ "webpack --config webpack.server.config.js --watch" ] })
+    new WebpackShellPlugin({
+        onBuildEnd: [ __DEV__ ? "webpack --config webpack.server.config.js --watch" : "webpack --config webpack.server.config.js" ]
+    })
   ]
 };
 

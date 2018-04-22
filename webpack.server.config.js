@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const WebpackNodeExternals = require('webpack-node-externals');
 const WebpackShellPlugin = require('webpack-shell-plugin');
 
+const __DEV__ = process.env.NODE_ENV === 'development';
+
 //
 // Configuration for the server-side bundle (server)
 // -----------------------------------------------------------------------------
@@ -45,10 +47,15 @@ const serverConfig = {
 
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.BROWSER': false
+      'process.env.BROWSER': false,
+      'process.env': {
+          NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+      },
+      __DEV__
     }),
-    new WebpackShellPlugin({ onBuildEnd: [ "nodemon --watch server --exec node server/bundle.js" ] })
-  ],
+
+    __DEV__ && new WebpackShellPlugin({ onBuildEnd: [ "nodemon --watch server --exec node server/bundle.js" ] })
+  ].filter(e => e),
 
   externals: [WebpackNodeExternals()]
 };

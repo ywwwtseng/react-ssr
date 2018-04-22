@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Server side rendering project",
   "scripts": {
-    "start": "webpack --watch"
+    "dev": "cross-env NODE_ENV=development webpack --watch",
+    "build": "webpack"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +25,7 @@
     "concurrently": "3.5.0",
     "connect-mongo": "^2.0.0",
     "copy-webpack-plugin": "^4.2.3",
+    "cross-env": "^5.1.4",
     "express": "4.15.4",
     "express-http-proxy": "1.0.6",
     "express-session": "^1.15.6",
